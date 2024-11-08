@@ -46,13 +46,13 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
                 client.connect(host, port, username, password, timeout=timeout)
         except Exception as e:
             _LOGGER.error(f"Failed to connect: {repr(e)}")
-            return {"error": repr(e)}
+            return True
 
         try:
             _, stdout, stderr = client.exec_command(command, timeout=timeout)
         except TimeoutError as e:
             _LOGGER.error(f"Command execution timeout")
-            return {"error": repr(e)}
+            return True
 
         response = {
             "command": command,
